@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Predict</title>
+    <style>
+        body {
+            font-family: 'Adieu', monospace;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            /* display: flex; */
+            align-items: flex-start; /* Align items to the top */
+            justify-content: center;
+            text-align: center;
+            
+        }
+        .fullscreen-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .fullscreen-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .fullscreen-text {
+            position: absolute;
+            top: 20px; /* Adjust the top position as needed */
+            left: 50%;
+            transform: translateX(-50%); /* Only horizontally center the text */
+            font-size: 48px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        .navbar {
+            background-color: #000000;
+            color: #000000;
+            padding: 15px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar li {
+            margin-right: 20px;
+        }
+
+        .navbar li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 22px;
+        }
+
+        .navbar li:not(:last-child) {
+            margin-right: 300px;
+        }
+
+
+        .name {
+            position: absolute;
+            top: 26%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+            text-align: left;
+            color: #FFFFFF;
+        }
+
+        .name h1 {
+            font-size: 90px;
+            margin-bottom: 80px;
+        }
+        .centered-box {
+            position: fixed;
+            top:120%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.658);
+            font-size: 24px;
+            color: rgba(5, 0, 0, 0.815);
+            text-align: center;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .options label {
+            font-size: 20px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .options select,
+        .options input[type="text"] {
+            padding: 5px 10px;
+            font-size: 16px;
+            width: 200px; /* Adjust the width as needed */
+        }
+
+        /* Adjust the size and position of the submit button */
+        input[type="submit"] {
+            padding: 6px 14px;
+            font-size: 25px;
+            margin-top: 50px;
+            background-color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            font-family: 'Courier New', monospace;
+        }
+
+        .return-button {
+            position: fixed;
+            top: 80px;
+            right: -140px;
+            padding: 10px;
+            font-size: 18px;
+            background-color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('facts') }}">Facts</a></li>
+            <li><a href="{{ url_for('predict') }}">Predict</a></li>
+            <li><a href="{{ url_for('game') }}">Game</a></li>
+            <li><a href="{{ url_for('qartpred') }}">TitanicFGeorgia</a></li>
+        </ul>
+    </div>
+    <div class="fullscreen-bg">
+        <img src="https://wallpapercave.com/wp/IjttWMR.jpg" alt="Full-screen Image">
+    </div>
+    <div class="fullscreen-text">
+        <h2>Would you have survived on the Titanic?</h2>
+        <form method="POST" action="/predict">
+            <div class="options">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <label for="pclass">Pclass</label>
+                    <select id="pclass" name="pclass">
+                        <option value="1">First Class: ($125,000+)</option>
+                        <option value="2">Second Class: ($50,000-$124,999)</option>
+                        <option value="3">Third Class: ($49,999 and below)</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <label for="sex">Gender</label>
+                    <select id="sex" name="sex">
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <label for="age">Age</label>
+                    <input type="text" id="age" name="age" pattern="[0-9]+" title="Please enter a valid integer value">
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <label for="sibsp">Sibling On board</label>
+                    <select id="sibsp" name="sibsp">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <label for="parch">Parents on board</label>
+                    <select id="parch" name="parch">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <label for="embarked">Embarked</label>
+                    <select id="embarked" name="embarked">
+                        <option value="0">Cherbourg</option>
+                        <option value="1">Queenstown</option>
+                        <option value="2">Southampton</option>
+                    </select>
+                </div>
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+
+        <div {% if res %}
+            <div class="centered-box">
+                <p>{{ res }}</p>
+            </div>
+        {% endif %}
+        
+        
+</body>
+</html>

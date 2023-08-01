@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Predict</title>
+    <style>
+        body {
+            font-family: 'Adieu', monospace;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            /* display: flex; */
+            align-items: flex-start; /* Align items to the top */
+            justify-content: center;
+            text-align: center;
+            
+        }
+        .fullscreen-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .fullscreen-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .fullscreen-text {
+            position: absolute;
+            top: 20px; /* Adjust the top position as needed */
+            left: 50%;
+            transform: translateX(-50%); /* Only horizontally center the text */
+            font-size: 48px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        .navbar {
+            background-color: #000000;
+            color: #000000;
+            padding: 15px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar li {
+            margin-right: 20px;
+        }
+
+        .navbar li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 22px;
+        }
+
+        .navbar li:not(:last-child) {
+            margin-right: 300px;
+        }
+
+
+        .name {
+            position: absolute;
+            top: 26%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+            text-align: left;
+            color: #FFFFFF;
+        }
+
+        .name h1 {
+            font-size: 90px;
+            margin-bottom: 80px;
+        }
+        .centered-box {
+            position: fixed;
+            top:120%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.658);
+            font-size: 24px;
+            color: rgba(5, 0, 0, 0.815);
+            text-align: center;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .options label {
+            font-size: 20px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .options select,
+        .options input[type="text"] {
+            padding: 5px 10px;
+            font-size: 16px;
+            width: 200px; /* Adjust the width as needed */
+        }
+
+        /* Adjust the size and position of the submit button */
+        input[type="submit"] {
+            padding: 6px 14px;
+            font-size: 25px;
+            margin-top: 50px;
+            background-color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            font-family: 'Courier New', monospace;
+        }
+
+        .return-button {
+            position: fixed;
+            top: 80px;
+            right: -140px;
+            padding: 10px;
+            font-size: 18px;
+            background-color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('facts') }}">Facts</a></li>
+            <li><a href="{{ url_for('predict') }}">Predict</a></li>
+            <li><a href="{{ url_for('game') }}">Game</a></li>
+            <li><a href="{{ url_for('qartpred') }}">TitanicFGeorgia</a></li>
+        </ul>
+    </div>
+    <div class="fullscreen-bg">
+        <img src="https://phoebe.on.ge/2021/03/25/10._ssanssayssaassassaissassaEssassay.jpg" alt="Full-screen Image">
+    </div>
+    <div class="fullscreen-text">
+        <h2>გადარჩებოდი თუ არა ტიტანიკი საქართველოდან, რომ გასულიყო?</h2>
+        <form method="POST" action="/qartpred">
+            <div class="options">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <label for="pclass">ბილეთი</label>
+                    <select id="pclass" name="pclass">
+                        <option value="1">ბიზნეს კლასი</option>
+                        <option value="2">ეკონომ კლასი</option>
+                        <option value="3">არ ვიცი, ფბზე გადავცვალე</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <label for="sex">სქესი</label>
+                    <select id="sex" name="sex">
+                        <option value="0">კაცი</option>
+                        <option value="1">ქალი</option>
+                        <option value="0">ტრანსგენდერი</option>
+                        <option value="1">unsexual</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <label for="age">ასაკი</label>
+                    <input type="text" id="age" name="age" pattern="[0-9]+" title="Please enter a valid integer value">
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <label for="sibsp">შეყვარებული გემზე</label>
+                    <select id="sibsp" name="sibsp">
+                        <option value="0">არა</option>
+                        <option value="1">კი</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <label for="parch">ძმაკაცი წამოგყვა</label>
+                    <select id="parch" name="parch">
+                        <option value="0">არა</option>
+                        <option value="1">კი</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <label for="embarked">ჩასხდომის ადგილი</label>
+                    <select id="embarked" name="embarked">
+                        <option value="0">თბილისი(მტკვარი&გადაჯდომა)</option>
+                        <option value="1">ფოთი(შავი ზღვა)</option>
+                        <option value="2">ქუთაისი(რიონი)</option>
+                    </select>
+                </div>
+            </div>
+            <input type="submit" value="დავიძარით">
+        </form>
+
+        <div {% if res %}
+            <div class="centered-box">
+                <p>{{ res }}</p>
+            </div>
+        {% endif %}
+        
+        
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Website</title>
+    <style>
+        body {
+            font-family: 'Adieu', monospace;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrolling */
+        }
+        .navbar {
+            background-color: #000000;
+            color: #000000;
+            padding: 15px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar li {
+            margin-right: 20px;
+        }
+
+        .navbar li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 22px;
+        }
+
+        .navbar li:not(:last-child) {
+            margin-right: 300px;
+        }
+
+
+        .name {
+            position: absolute;
+            top: 26%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+            text-align: left;
+            color: #FFFFFF;
+        }
+
+        .name h1 {
+            font-size: 90px;
+            margin-bottom: 80px;
+        }
+        .container {
+            position: absolute;
+            top: 45%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+            text-align: left;
+            color: #ffffff;
+            width: 40%;
+        }
+
+        .container p {
+            font-size: 25px;
+            margin-bottom: 40px;
+            text-align: left; /* Align text to the left */
+        }
+        .fullscreen-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden; /* Hide the image overflowing from the viewport */
+        }
+
+        .fullscreen-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('facts') }}">Facts</a></li>
+            <li><a href="{{ url_for('predict') }}">Predict</a></li>
+            <li><a href="{{ url_for('game') }}">Game</a></li>
+            <li><a href="{{ url_for('qartpred') }}">TitanicFGeorgia</a></li>
+        </ul>
+    </div>
+    <div class="fullscreen-bg">
+        <img src="https://wallpaperaccess.com/full/4129916.jpg" alt="Full-screen Image">
+    </div>
+    <div class="container">
+        <p>
+            1. The iceberg that hit the ship may have jutted out 100 feet above water.
+        </p>
+        <p>
+            2.Over half the people on board could have survived if all of the space available on the lifeboats was used.
+        </p>
+        <p>
+            3.The ship carried 2,223 passengers and crew.
+        </p>
+        <p>
+            4.The Titanic was able to carry 64 lifeboats but only carried 20.
+        </p>
+        <p>
+            5.There were 40,000 fresh eggs aboard the ship
+        </p>
+        <p>
+            6.Only the residents of Tskaltubo and Batumi survived
+        </p>
+    </div>
+</body>
+</html>
